@@ -36,14 +36,7 @@ const SideDrawer = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const navigate = useNavigate();
-  const {
-    setSelectedChat,
-    user,
-    notification,
-    setNotification,
-    chats,
-    setChats,
-  } = ChatState();
+  const { user, setSelectedChat, chats, setChats } = ChatState();
   const toast = useToast();
 
   const logoutHandler = () => {
@@ -59,16 +52,13 @@ const SideDrawer = () => {
         isClosable: true,
         position: "top-left",
       });
-      return;
     }
     try {
       setLoading(true);
       const config = {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
+        headers: { Authorization: `Bearer ${user.token}` },
       };
-      const { data } = await axios.get(`/api/user?search=${search}`, config);
+      const { data } = await axios.get(`/api/user/?search=${search}`, config);
       setLoading(false);
       setSearchResult(data);
     } catch (error) {
@@ -86,13 +76,12 @@ const SideDrawer = () => {
     try {
       setLoadingChat(true);
       const config = {
-        headers: {
-          "Content-type": "application/json",
-          Authorization: `Bearer ${user.token}`,
-        },
+        "Content-type": "application/json",
+        headers: { Authorization: `Bearer ${user.token}` },
       };
-      const { data } = await axios.post(`/api/chat`, { userId }, config);
+      const { data } = await axios.post("/api/chat", { userId }, config);
       if (!chats.find((c) => c._id === data._id)) setChats([data, ...chats]);
+
       setSelectedChat(data);
       setLoadingChat(false);
       onClose();

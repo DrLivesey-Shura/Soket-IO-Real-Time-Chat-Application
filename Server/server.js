@@ -6,6 +6,7 @@ const chats = require("./data/data");
 require("dotenv").config();
 const UserRoutes = require("./Routes/UserRoutes.js");
 const ChatRoutes = require("./Routes/ChatRoutes.js");
+const MessageRoutes = require("./Routes/MessageRoutes.js");
 const colors = require("colors");
 const { errorHandler, notFound } = require("./Middleware/errorMiddleware.js");
 
@@ -26,6 +27,7 @@ app.use(express.json());
 // Routes
 app.use("/api/user", UserRoutes);
 app.use("/api/chat", ChatRoutes);
+app.use("/api/message", MessageRoutes);
 app.use(notFound);
 app.use(errorHandler);
 

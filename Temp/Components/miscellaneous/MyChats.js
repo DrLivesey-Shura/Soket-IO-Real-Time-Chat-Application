@@ -5,25 +5,24 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Button } from "@chakra-ui/react";
 import GroupChatModal from "./GroupChatModal";
+import ChatLoading from "../ChatLoading";
 import { ChatState } from "../../Context/ChatProvider";
 import { getSender } from "../../config/ChatLogics";
-import ChatLoading from "../ChatLoading";
 
 const MyChats = ({ fetchAgain }) => {
   const [loggedUser, setLoggedUser] = useState();
 
-  const { selectedChat, setSelectedChat, user, chats, setChats } = ChatState();
+  const { user, selectedChat, setSelectedChat, chats, setChats } = ChatState();
 
   const toast = useToast();
 
   const fetchChats = async () => {
     try {
+      console.log(user.token);
       const config = {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
+        headers: { Authorization: `Bearer ${user.token}` },
       };
-
+      console.log("somethigns");
       const { data } = await axios.get("/api/chat", config);
       setChats(data);
     } catch (error) {
@@ -37,6 +36,7 @@ const MyChats = ({ fetchAgain }) => {
       });
     }
   };
+
   useEffect(() => {
     setLoggedUser(JSON.parse(localStorage.getItem("userInfo")));
     fetchChats();
@@ -45,7 +45,7 @@ const MyChats = ({ fetchAgain }) => {
 
   return (
     <Box
-      display={{ base: selectedChat ? "none" : "flex", md: "flex" }}
+      d={{ base: selectedChat ? "none" : "flex", md: "flex" }}
       flexDir="column"
       alignItems="center"
       p={3}
@@ -59,7 +59,7 @@ const MyChats = ({ fetchAgain }) => {
         px={3}
         fontSize={{ base: "28px", md: "30px" }}
         fontFamily="Work sans"
-        display="flex"
+        d="flex"
         w="100%"
         justifyContent="space-between"
         alignItems="center"
@@ -99,7 +99,6 @@ const MyChats = ({ fetchAgain }) => {
                 key={chat._id}
               >
                 <Text>
-                  {console.log(chat)}
                   {!chat.isGroupChat
                     ? getSender(loggedUser, chat.users)
                     : chat.chatName}
