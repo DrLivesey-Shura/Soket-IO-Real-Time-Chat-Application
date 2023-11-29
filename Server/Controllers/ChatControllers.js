@@ -6,7 +6,6 @@ const { json } = require("express");
 const accessChat = expressAsyncHandler(async (req, res) => {
   const { userId } = req.body;
   if (!userId) {
-    console.log("user Id not sent with params");
     return res.sendStatus(400);
   }
   var isChat = await Chat.find({
