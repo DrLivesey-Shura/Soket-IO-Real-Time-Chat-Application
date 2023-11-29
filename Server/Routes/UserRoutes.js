@@ -12,7 +12,5 @@ const routes = new Router();
 routes.post("/", registerUser);
 routes.post("/login", loginUser);
 routes.get("/", protect, getAllUsers);
-// routes.put('/', updateUsesr);
-// routes.delete('/', deleteUser);
 
 module.exports = routes;
