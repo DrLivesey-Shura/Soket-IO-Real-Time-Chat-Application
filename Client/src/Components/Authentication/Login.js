@@ -60,7 +60,7 @@ const Login = () => {
       navigate("/chats");
     } catch (error) {
       toast({
-        title: "An Error Occured",
+        title: "Wrong Email or Password",
         status: "error",
         duration: 5000,
         isClosable: true,
@@ -98,7 +98,6 @@ const Login = () => {
       </FormControl>
 
       <Button
-        colorScheme="blue"
         width="100%"
         style={{ marginTop: 15 }}
         onClick={submitHandler}
@@ -107,8 +106,6 @@ const Login = () => {
         Login
       </Button>
       <Button
-        variant="solid"
-        colorScheme="red"
         width="100%"
         onClick={() => {
           setEmail("guest@gmail.com");

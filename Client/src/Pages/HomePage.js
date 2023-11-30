@@ -9,34 +9,36 @@ import {
   Tab,
   TabPanel,
 } from "@chakra-ui/react";
-import Login from "../Components/Authentification/Login";
-import SignUp from "../Components/Authentification/SignUp";
+import Login from "../Components/Authentication/Login.js";
 import { useNavigate } from "react-router-dom";
+import SignUp from "../Components/Authentication/SignUp.js";
+import ThemeToggler from "../Components/ThemeToggler.js";
 
 const HomePage = () => {
   const navigate = useNavigate();
+
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("userInfo"));
 
     if (user) navigate("/chats");
   }, [navigate]);
   return (
-    <Container maxW="xl" centerContent>
+    <Container mb="20px" maxW="xl" centerContent>
+      <ThemeToggler />
       <Box
         display="flex"
         justifyContent="center"
         p={3}
-        bg={"white"}
         w="100%"
         m="40px 0 15px 0"
         borderRadius="lg"
         borderWidth="1px"
       >
-        <Text fontFamily="Work Sans" fontSize="4xl" color="black">
+        <Text fontFamily="Work Sans" fontSize="4xl">
           The-Loyal-Blode
         </Text>
       </Box>
-      <Box bg="white" w="100%" p={4} borderRadius="lg" borderWidth="1px">
+      <Box w="100%" p={4} borderRadius="lg" borderWidth="1px">
         <Tabs variant="soft-rounded">
           <TabList mb="1em">
             <Tab width="50%">Login</Tab>

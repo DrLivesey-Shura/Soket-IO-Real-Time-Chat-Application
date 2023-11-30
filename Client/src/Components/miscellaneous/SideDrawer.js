@@ -30,6 +30,7 @@ import UsesrListItem from "../UserAvatar/UserListItem";
 import { getSender } from "../../config/ChatLogics";
 import NotificationBadge from "react-notification-badge";
 import { Effect } from "react-notification-badge";
+import ThemeToggler from "../ThemeToggler";
 
 const SideDrawer = () => {
   const [search, setSearch] = useState("");
@@ -117,7 +118,6 @@ const SideDrawer = () => {
         display="flex"
         justifyContent="space-between"
         alignItems="center"
-        bg="white"
         width="100%"
         padding="5px 10px 5px 10px"
         borderWidth="5px"
@@ -134,32 +134,36 @@ const SideDrawer = () => {
         <Text fontSize="2xl" fontFamily="Work Sans">
           We Message
         </Text>
-        <div>
-          <Menu>
-            <MenuButton p={1}>
-              <NotificationBadge
-                count={notification.length}
-                effect={Effect.SCALE}
-              ></NotificationBadge>
-              <BellIcon fontSize="2xl" m={1} />
-            </MenuButton>
-            <MenuList pl={2}>
-              {!notification.length && "No New Messages"}
-              {notification.map((notif) => (
-                <MenuItem
-                  key={notif._id}
-                  onClick={() => {
-                    setSelectedChat(notif.chat);
-                    setNotification(notification.filter((n) => n !== notif));
-                  }}
-                >
-                  {notif.chat.isGroupChat
-                    ? `New Message in ${notif.chat.chatName}`
-                    : `New Message from ${getSender(user, notif.chat.users)}`}
-                </MenuItem>
-              ))}
-            </MenuList>
-          </Menu>
+
+        <Box display="flex">
+          <Box display="flex">
+            <Menu>
+              <MenuButton p={1}>
+                <NotificationBadge
+                  count={notification.length}
+                  effect={Effect.SCALE}
+                ></NotificationBadge>
+                <BellIcon fontSize="2xl" m={1} />
+              </MenuButton>
+              <MenuList pl={2}>
+                {!notification.length && "No New Messages"}
+                {notification.map((notif) => (
+                  <MenuItem
+                    key={notif._id}
+                    onClick={() => {
+                      setSelectedChat(notif.chat);
+                      setNotification(notification.filter((n) => n !== notif));
+                    }}
+                  >
+                    {notif.chat.isGroupChat
+                      ? `New Message in ${notif.chat.chatName}`
+                      : `New Message from ${getSender(user, notif.chat.users)}`}
+                  </MenuItem>
+                ))}
+              </MenuList>
+            </Menu>
+            <ThemeToggler />
+          </Box>
           <Menu>
             <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
               <Avatar
@@ -177,7 +181,7 @@ const SideDrawer = () => {
               <MenuItem onClick={logoutHandler}>Logout</MenuItem>
             </MenuList>
           </Menu>
-        </div>
+        </Box>
       </Box>
       <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
         <DrawerOverlay />
